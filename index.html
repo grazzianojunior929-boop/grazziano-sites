@@ -11,9 +11,10 @@
    a cor escolhida ali pinta a página inteira. Blocos em grade "bento", tudo leva ao WhatsApp. */
 :root{
   color-scheme:dark;
-  --bg:#100e1c; --bg2:#17142a; --card:#1d1a33; --line:#2f2b4d;
-  --fg:#f4f1ff; --muted:#a8a3c7;
-  --accent:#ff8a3d; --on-accent:#14101f;
+  --bg:#070a16; --bg2:#0c1122; --card:#111830; --line:#222b4f;
+  --fg:#eef3ff; --muted:#97a3c7;
+  --accent:#2ee6ff; --accent2:#7c5cff; --on-accent:#061018;
+  --term-bg:#04060d; --term-fg:#d7e3ff;
   --mock-bg:#ffffff; --mock-fg:#17142a; --mock-soft:#f1eff8;
   --ok:#5fe0a0;
   --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
@@ -24,14 +25,14 @@
 @media (prefers-color-scheme: light){
   :root:not([data-theme="dark"]){
     color-scheme:light;
-    --bg:#f5f3fb; --bg2:#ebe8f6; --card:#ffffff; --line:#d9d4ec;
-    --fg:#17142a; --muted:#5c5780; --ok:#17885a;
+    --bg:#f3f6fd; --bg2:#e7edf9; --card:#ffffff; --line:#d2dbf0;
+    --fg:#0b1130; --muted:#55608a; --ok:#12805a;
   }
 }
 :root[data-theme="light"]{
   color-scheme:light;
-  --bg:#f5f3fb; --bg2:#ebe8f6; --card:#ffffff; --line:#d9d4ec;
-  --fg:#17142a; --muted:#5c5780; --ok:#17885a;
+  --bg:#f3f6fd; --bg2:#e7edf9; --card:#ffffff; --line:#d2dbf0;
+  --fg:#0b1130; --muted:#55608a; --ok:#12805a;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -74,7 +75,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:co
 
 /* hero */
 .hero{padding-block:clamp(36px,6vw,72px) clamp(48px,7vw,88px);position:relative}
-.glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(520px circle at var(--mx,70%) var(--my,30%),color-mix(in srgb,var(--accent) 20%,transparent),transparent 70%);transition:background .4s}
+.glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(520px circle at var(--mx,70%) var(--my,30%),color-mix(in srgb,var(--accent) 18%,transparent),transparent 70%),radial-gradient(700px circle at 12% 95%,color-mix(in srgb,var(--accent2) 24%,transparent),transparent 70%);transition:background .4s}
 .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,4vw,56px);align-items:center}
 @media (max-width:940px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
 .hero-copy{display:flex;flex-direction:column;gap:22px;min-width:0}
@@ -205,25 +206,174 @@ input[type=text]:focus{outline:none;border-color:var(--accent)}
 .ex-dots{display:flex;gap:6px}
 .ex-dots i{width:22px;height:5px;border-radius:3px;background:var(--line);transition:background .3s,width .3s}
 .ex-dots i.on{background:var(--accent);width:38px}
-.duo{position:relative;padding:0 7% 36px 0}
-.duo .mock{box-shadow:0 30px 60px -35px var(--accent)}
-.duo .mock.phone{position:absolute;right:0;bottom:0;width:clamp(118px,32%,190px);border-radius:22px;border:5px solid var(--fg);box-shadow:0 24px 40px -18px var(--fg)}
-.mock.phone .mock-nav{padding:10px}
-.mock.phone .mock-hero{margin:0 8px;padding:12px 10px;gap:6px}
-.mock.phone .mock-hero b{font-size:14px}
-.mock.phone .mock-hero span{font-size:10px}
-.mock.phone .mock-hero em{font-size:9px;padding:5px 9px}
-.mock.phone .mock-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px}
-.mock.phone .mock-item u{height:30px}
+.duo{position:relative;padding:0 17% 40px 0}
+.frame{background:var(--card);border:1px solid var(--line);overflow:hidden}
+.frame.desk{border-radius:14px;box-shadow:0 40px 70px -42px var(--accent)}
+.fbar{display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--bg2);border-bottom:1px solid var(--line)}
+.fbar i{width:9px;height:9px;border-radius:50%;background:var(--muted);opacity:.5}
+.fbar span{margin-left:8px;flex:1;min-width:0;font-family:var(--mono);font-size:11px;color:var(--muted);background:var(--card);border-radius:6px;padding:3px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.screen{container-type:inline-size;overflow:hidden;position:relative}
+.desk .screen{aspect-ratio:16/10}
+.frame.cel{position:absolute;right:0;bottom:0;width:26%;border-radius:22px;border:5px solid var(--fg);background:var(--fg);box-shadow:0 26px 44px -20px var(--term-bg)}
+.frame.cel .screen{aspect-ratio:9/18;border-radius:16px}
+.frame.cel::before{content:"";position:absolute;top:4px;left:50%;width:28%;height:7px;border-radius:6px;background:var(--fg);transform:translateX(-50%);z-index:3}
+.view-toggle{display:none;gap:6px}
+.view-toggle .chip{padding:5px 12px;font-size:.82rem}
+
+/* --- os sites de exemplo: tamanhos em "em", e o "em" vale uma fração da largura da moldura (cqw) --- */
+.site{position:absolute;inset:0;font-size:9px;font-size:1.5cqw;line-height:1.3;overflow:hidden;font-family:var(--body)}
+.site.m{font-size:4.1cqw}
+.site *{box-sizing:border-box}
+.site h4{margin:0;font-weight:800;line-height:1.02}
+.site p{margin:0}
+.site em,.site u{font-style:normal;text-decoration:none}
+.site svg{display:block;width:100%;height:100%}
+.site .top{display:flex;align-items:center;justify-content:space-between;gap:1em}
+.site .top nav{display:flex;gap:1.6em}
+.site:not(.m) .om{display:none}
+.site.m .hm{display:none}
+
+.s-moda{background:#faf3ee;color:#2b1d1a}
+.s-moda .strip{background:#2b1d1a;color:#faf3ee;text-align:center;font-size:.72em;padding:.45em;letter-spacing:.08em}
+.s-moda .top{padding:1em 2.4em;font-size:.82em;border-bottom:1px solid #2b1d1a22}
+.s-moda .lg{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:1.9em}
+.s-moda .hero{display:grid;grid-template-columns:1fr 1fr;gap:2em;padding:1.8em 2.4em 1.4em;align-items:center}
+.s-moda small{letter-spacing:.2em;font-size:.72em;color:#a0584e}
+.s-moda h4{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:3.3em;margin:.25em 0}
+.s-moda p{font-size:.95em;opacity:.75;max-width:24em}
+.s-moda .bt{display:inline-block;margin-top:1.1em;background:#2b1d1a;color:#faf3ee;padding:.75em 1.6em;font-size:.8em;letter-spacing:.1em;text-transform:uppercase}
+.s-moda .pic{height:15em;border-radius:10em 10em .6em .6em;background:linear-gradient(170deg,#eccfc4,#d9a394);color:#fff9f5;padding:1.4em 4em 0}
+.s-moda .row{display:grid;grid-template-columns:repeat(4,1fr);gap:1em;padding:0 2.4em}
+.s-moda .pc i{display:block;height:6.5em;background:#f0e2d8;color:#b9796c;padding:.8em;border-radius:.4em}
+.s-moda .pc b{display:block;font-size:.82em;font-weight:500;margin-top:.5em}
+.s-moda .pc span{font-size:.8em;opacity:.7}
+
+.s-barb{background:#131211;color:#efe6d2;background-image:radial-gradient(circle at 80% 0,#c9a24a2e,transparent 50%)}
+.s-barb .top{padding:1.2em 2.4em;font-size:.78em;letter-spacing:.14em;text-transform:uppercase}
+.s-barb .lg{font-family:var(--display);font-weight:800;font-size:1.45em;color:#c9a24a}
+.s-barb .bt{display:inline-block;background:#c9a24a;color:#131211;padding:.7em 1.4em;font-weight:700;font-size:.8em;letter-spacing:.1em;text-transform:uppercase;border-radius:.2em}
+.s-barb .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:2.4em;padding:1.4em 2.4em;align-items:center}
+.s-barb small{color:#c9a24a;letter-spacing:.24em;font-size:.7em}
+.s-barb h4{font-family:var(--display);text-transform:uppercase;font-size:3.4em;margin:.25em 0 .3em}
+.s-barb p{opacity:.7;font-size:.95em;margin-bottom:1.2em}
+.s-barb .card{border:1px solid #c9a24a55;padding:1.4em;position:relative;background:#1b1917}
+.s-barb .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:.5em;background:repeating-linear-gradient(135deg,#c9a24a 0 .5em,#131211 .5em 1em,#efe6d2 1em 1.5em,#131211 1.5em 2em)}
+.s-barb .card .t{display:block;letter-spacing:.2em;font-size:.72em;color:#c9a24a;margin:0 0 .8em .8em}
+.s-barb .pl{display:flex;align-items:baseline;gap:.5em;margin:.75em 0 0 .8em;font-size:.95em}
+.s-barb .pl i{flex:1;border-bottom:1px dotted #efe6d266}
+.s-barb .pl b{color:#c9a24a}
+.s-barb .slots{display:flex;gap:.6em;padding:.6em 2.4em;align-items:center;font-size:.8em;flex-wrap:wrap}
+.s-barb .slots span{border:1px solid #efe6d244;padding:.45em .9em;border-radius:5em}
+.s-barb .slots span.on{background:#efe6d2;color:#131211}
+
+.s-burg{background:#fff4dc;color:#2a1408}
+.s-burg .top{padding:1em 2.4em;font-size:.85em;font-weight:600}
+.s-burg .lg{background:#e4312b;color:#fff;font-family:var(--display);font-weight:800;font-size:1.3em;padding:.25em .8em;border-radius:5em;transform:rotate(-3deg)}
+.s-burg .open{background:#2a1408;color:#ffc21a;padding:.4em .9em;border-radius:5em;font-size:.85em}
+.s-burg .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:1em;padding:.6em 2.4em;align-items:center}
+.s-burg h4{font-family:var(--display);font-size:3.9em;color:#e4312b;letter-spacing:-.03em}
+.s-burg p{margin:.7em 0 1.1em;font-size:1em;max-width:22em}
+.s-burg .bt{display:inline-block;background:#e4312b;color:#fff;font-weight:700;padding:.8em 1.6em;border-radius:5em;font-size:.9em;box-shadow:0 .3em 0 #2a1408}
+.s-burg .plate{justify-self:center;width:15em;height:15em;border-radius:50%;background:#ffc21a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25em}
+.s-burg .plate i{display:block;width:9em}
+.s-burg .bun-t{height:3.2em;border-radius:5em 5em .6em .6em;background:#d98a2b radial-gradient(circle,#fff3d0 .18em,transparent .2em) 0 0/1.6em 1.3em}
+.s-burg .plate .let{height:.7em;border-radius:1em;background:#5fb23a;width:10em}
+.s-burg .plate .che{height:.6em;background:#fff3a8;border-radius:.2em;width:9.6em}
+.s-burg .pat{height:1.5em;border-radius:.6em;background:#5a2d16}
+.s-burg .bun-b{height:1.5em;border-radius:.4em .4em 1.6em 1.6em;background:#d98a2b}
+.s-burg .row{display:grid;grid-template-columns:repeat(3,1fr);gap:1em;padding:.6em 2.4em}
+.s-burg .mc{background:#fff;border-radius:1em;padding:.9em 1em;display:grid;grid-template-columns:1fr auto;gap:.2em .6em;align-items:center;box-shadow:0 .2em 0 #2a140822}
+.s-burg .mc b{font-size:.95em}
+.s-burg .mc span{font-size:.75em;opacity:.65;grid-column:1}
+.s-burg .mc u{font-weight:800;color:#e4312b;grid-column:1}
+.s-burg .mc em{grid-row:1/4;grid-column:2;width:2.2em;height:2.2em;border-radius:50%;background:#ffc21a;display:grid;place-items:center;font-weight:800;font-size:1.1em}
+.s-burg .bag{position:absolute;left:1em;right:1em;bottom:1em;background:#2a1408;color:#fff;border-radius:5em;padding:.9em 1.4em;display:flex;justify-content:space-between;font-weight:700;font-size:.9em}
+
+.s-game{background:#07060f;color:#eef0ff;background-image:linear-gradient(#ffffff0d 1px,transparent 1px),linear-gradient(90deg,#ffffff0d 1px,transparent 1px);background-size:3em 3em}
+.s-game .top{padding:1.1em 2.4em;font-size:.78em;text-transform:uppercase;letter-spacing:.14em}
+.s-game .lg{font-family:var(--display);font-weight:800;font-size:1.5em;letter-spacing:.04em}
+.s-game .lg span{color:#26f0ff}
+.s-game .hero{display:grid;grid-template-columns:1fr 1fr;gap:2em;padding:1.2em 2.4em;align-items:center}
+.s-game small{font-family:var(--mono);color:#26f0ff;font-size:.72em;letter-spacing:.16em}
+.s-game h4{font-family:var(--display);font-size:3.5em;text-transform:uppercase;margin:.2em 0 .3em;background:linear-gradient(90deg,#26f0ff,#ff2bd6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.s-game p{opacity:.7;font-size:.95em;margin-bottom:1.2em}
+.s-game .bt{display:inline-block;background:#ff2bd6;color:#07060f;font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.8em;padding:.85em 1.8em;clip-path:polygon(.8em 0,100% 0,calc(100% - .8em) 100%,0 100%)}
+.s-game .kb{height:12em;border:1px solid #26f0ff66;border-radius:.8em;padding:1em;background:#0e0c1f;box-shadow:0 0 3em #ff2bd644,inset 0 0 2em #26f0ff22;display:grid;grid-template-columns:repeat(12,1fr);gap:.35em}
+.s-game .kb i{border-radius:.25em;background:#1b1838;border-bottom:.15em solid #26f0ff}
+.s-game .kb i:nth-child(3n){border-color:#ff2bd6}
+.s-game .kb i.sp{grid-column:span 6}
+.s-game .row{display:grid;grid-template-columns:repeat(3,1fr);gap:1em;padding:.4em 2.4em}
+.s-game .gc{background:#0e0c1f;border:1px solid #ffffff22;padding:.9em 1em;clip-path:polygon(0 0,calc(100% - 1em) 0,100% 1em,100% 100%,0 100%);display:flex;flex-direction:column;gap:.2em}
+.s-game .gc em{align-self:flex-start;font-family:var(--mono);font-size:.65em;background:#26f0ff;color:#07060f;padding:.15em .5em;font-weight:700}
+.s-game .gc b{font-size:.95em}
+.s-game .gc span{font-size:.85em;color:#ff2bd6;font-weight:700}
+
+.s-clin{background:#f3fbfa;color:#10323a}
+.s-clin .top{padding:1.1em 2.4em;font-size:.85em;background:#fff;border-bottom:1px solid #10323a14}
+.s-clin .lg{font-weight:700;font-size:1.25em;display:flex;align-items:center;gap:.5em}
+.s-clin .lg::before{content:"+";display:grid;place-items:center;width:1.5em;height:1.5em;border-radius:.45em;background:#0fa3a3;color:#fff;font-weight:800}
+.s-clin .bt{display:inline-block;background:#0fa3a3;color:#fff;font-weight:600;padding:.75em 1.5em;border-radius:.7em;font-size:.88em;text-align:center}
+.s-clin .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:2.4em;padding:1.8em 2.4em 1.2em;align-items:center}
+.s-clin small{display:inline-block;background:#0fa3a31f;color:#0b7c7c;padding:.3em .8em;border-radius:5em;font-size:.75em;font-weight:600}
+.s-clin h4{font-size:3em;margin:.35em 0;letter-spacing:-.02em}
+.s-clin p{opacity:.72;font-size:.98em;max-width:24em}
+.s-clin .tr{display:flex;flex-wrap:wrap;gap:.4em 1.2em;margin-top:1.1em;font-size:.78em;font-weight:600}
+.s-clin .tr span::before{content:"✓ ";color:#0fa3a3}
+.s-clin .form{background:#fff;border-radius:1.2em;padding:1.3em;box-shadow:0 1.2em 2.4em -1.2em #10323a55;display:grid;gap:.7em}
+.s-clin .form b{font-size:1.05em}
+.s-clin .form label{display:block;font-size:.7em;opacity:.6}
+.s-clin .form div{border:1px solid #10323a26;border-radius:.6em;padding:.5em .8em;font-size:.9em}
+.s-clin .row{display:grid;grid-template-columns:repeat(4,1fr);gap:1em;padding:0 2.4em}
+.s-clin .sp{background:#fff;border-radius:.9em;padding:.8em;display:flex;align-items:center;gap:.6em;font-size:.82em;font-weight:600}
+.s-clin .sp::before{content:"";width:1.8em;height:1.8em;border-radius:50%;background:#0fa3a333;flex:none}
+
+/* versão celular de cada exemplo */
+.site.m .top{padding:1em 1.2em}
+.site.m .hero{grid-template-columns:1fr;padding:1.2em;gap:1.2em}
+.site.m .row{grid-template-columns:1fr 1fr;padding:0 1.2em}
+.site.m .slots{padding:.6em 1.2em}
+.site.m h4{font-size:2.4em}
+.site.m.s-burg h4{font-size:2.7em}
+.site.m.s-burg .row,.site.m.s-game .row{grid-template-columns:1fr}
+.site.m.s-burg .plate{width:11em;height:11em}
+.site.m.s-burg .plate i{width:7em}
+.site.m.s-burg .plate .let{width:7.8em}
+.site.m.s-burg .plate .che{width:7.4em}
+.site.m.s-moda .pic{height:11em;padding:1.2em 5em 0}
+.site.m.s-game .kb{height:8em}
+
 @media (max-width:900px){
   .ex{grid-template-columns:minmax(0,1fr)}
-  .ex-stage{order:-1;top:calc(env(safe-area-inset-top,0px) + 58px);z-index:5;background:var(--bg);padding-block:12px;box-shadow:0 14px 14px -14px var(--bg)}
+  .ex-stage{order:-1;top:calc(env(safe-area-inset-top,0px) + 58px);z-index:5;background:var(--bg);padding-block:10px;box-shadow:0 14px 14px -14px var(--bg);gap:10px}
   .ex-step{min-height:58vh;justify-content:flex-start;padding-top:28px}
-  .ex-stage .note{display:none}
-  .duo{padding:0 9% 26px 0}
-  .duo .mock.phone{width:190px;transform:scale(.62);transform-origin:bottom right}
+  .ex-stage .note,.ex-dots{display:none}
+  .view-toggle{display:flex}
+  .duo{padding:0;display:flex;justify-content:center;align-items:center}
+  .duo[data-view="cel"]{height:min(88vw,360px)}
+  .duo .frame.desk{width:min(100%,480px)}
+  .duo .frame.cel{position:relative;width:auto;height:100%;aspect-ratio:9/18.4}
+  .duo .frame.cel .screen{aspect-ratio:auto;height:100%}
+  .duo[data-view="pc"] .frame.cel,.duo[data-view="cel"] .frame.desk{display:none}
 }
 @media (max-width:480px){.wa-long{display:none}}
+
+/* --- camada "tech": rede de partículas, grade, borda animada, terminal --- */
+.hero{overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 50% 25%,#000,transparent 72%);mask-image:radial-gradient(ellipse at 50% 25%,#000,transparent 72%)}
+#net{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.75}
+h1 .hl{box-shadow:0 0 46px -10px var(--accent)}
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+.builder{position:relative}
+.builder::before{content:"";position:absolute;inset:-2px;border-radius:28px;padding:2px;pointer-events:none;background:conic-gradient(from var(--ang),transparent 0 55%,var(--accent),var(--accent2),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 5s linear infinite}
+@keyframes spin{to{--ang:360deg}}
+.tech{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.tech .sec-head{margin-bottom:0}
+@media (max-width:900px){.tech{grid-template-columns:minmax(0,1fr)}}
+.term{background:var(--term-bg);color:var(--term-fg);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 70px -40px var(--accent2);min-width:0}
+.term .fbar{background:transparent;border-color:#ffffff1a}
+.term pre{margin:0;padding:18px 20px 22px;font:400 .88rem/1.75 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;min-height:13.5em}
+.term pre::after{content:"▍";color:var(--accent);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
 
 /* aparecer ao rolar: só liga quando o JavaScript confirma que consegue revelar */
 .anim .rv{opacity:0;transform:translateY(34px) scale(.98);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
@@ -298,12 +448,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <a href="#processo">Como funciona</a>
       <a href="#pedido">Orçamento</a>
     </nav>
-    <a class="btn sm js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener"><span class="wa-long">Chamar no&nbsp;</span>WhatsApp</a>
+    <a class="btn sm js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener"><span class="wa-long">Chamar no</span>WhatsApp</a>
   </div>
 </header>
 
 <main id="topo">
   <div class="hero" id="hero">
+    <canvas id="net" aria-hidden="true"></canvas>
     <div class="glow"></div>
     <div class="wrap hero-grid">
       <div class="hero-copy">
@@ -364,8 +515,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <div class="ex">
         <div class="ex-steps" id="exSteps"></div>
         <div class="ex-stage">
-          <div class="ex-meta"><span class="eyebrow" id="exCount">Exemplo 1 de 5</span><div class="ex-dots" id="exDots"></div></div>
-          <div class="duo" id="duo"></div>
+          <div class="ex-meta"><span class="eyebrow" id="exCount">Exemplo 1 de 5</span><div class="ex-dots" id="exDots"></div><div class="view-toggle" id="viewToggle"><button class="chip" type="button" id="viewCel" data-v="cel" aria-pressed="true">Celular</button><button class="chip" type="button" id="viewPc" data-v="pc" aria-pressed="false">PC</button></div></div>
+          <div class="duo" id="duo" data-view="cel"></div>
           <span class="note">Marcas e produtos fictícios, só para demonstração.</span>
         </div>
       </div>
@@ -425,6 +576,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
           <h3>Ajustes e manutenção</h3>
           <p>Já tem um site? Eu atualizo o visual, corrijo erros e deixo tudo funcionando bem no celular.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tecnologia">
+    <div class="wrap tech">
+      <div class="sec-head">
+        <span class="eyebrow">Tecnologia</span>
+        <h2>Por trás do visual, <span class="hl">código de verdade</span></h2>
+        <p class="lead">Sites leves, que abrem rápido e se ajustam sozinhos a qualquer tela. Uso inteligência artificial para acelerar a entrega sem abrir mão da qualidade.</p>
+        <div class="tags"><span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">Design responsivo</span><span class="tag">GitHub</span><span class="tag">Nuvemshop</span><span class="tag">IA com Claude</span></div>
+      </div>
+      <div class="term" aria-label="Demonstração em terminal">
+        <div class="fbar"><i></i><i></i><i></i></div>
+        <pre id="term">$ novo-site --cliente "seu negócio"
+✓ layout responsivo (celular + PC)
+✓ botão do WhatsApp conectado
+✓ animações e carregamento rápido
+✓ publicado na internet
+Pronto. Seu site está no ar.</pre>
       </div>
     </div>
   </section>
@@ -519,7 +690,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
 
   /* ---------- estado: tudo que o visitante escolhe fica aqui ---------- */
-  var state = { name:"", type:"loja", color:"#ff8a3d", needs:{}, when:"" };
+  var state = { name:"", type:"loja", color:"#2ee6ff", needs:{}, when:"" };
 
   var TYPES = {
     loja:   {label:"Loja virtual", fallback:"Sua Loja", links:["Novidades","Coleção","Contato"], h:"Nova coleção no ar", s:"Compre online e receba em casa.", cta:"Comprar agora", items:[["Vestido Aurora","exemplo"],["Bolsa Lume","exemplo"],["Conjunto Sol","exemplo"]]},
@@ -527,7 +698,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     servico:{label:"Site de serviços", fallback:"Seu Negócio", links:["Serviços","Sobre","Agenda"], h:"Agende seu horário", s:"Atendimento rápido, sem fila e sem ligação.", cta:"Agendar pelo WhatsApp", items:[["Avaliação","exemplo"],["Atendimento","exemplo"],["Pacote mensal","exemplo"]]},
     comida: {label:"Site de restaurante", fallback:"Seu Restaurante", links:["Cardápio","Combos","Entrega"], h:"Peça sem sair de casa", s:"Cardápio completo e pedido em um toque.", cta:"Fazer pedido", items:[["Prato do dia","exemplo"],["Combo família","exemplo"],["Sobremesa","exemplo"]]}
   };
-  var COLORS = ["#ff8a3d","#ff6b9a","#b9ef4f","#4fd8ff","#b49bff","#ffd23f"];
+  var COLORS = ["#2ee6ff","#9d8bff","#ff5fa8","#3dffb0","#c6f24e","#ffd23f"];
   var NEEDS = ["Loja virtual","Landing page","Site institucional","Botão de WhatsApp","Catálogo de produtos","CRM / painel de clientes","Ajustes em site que já tenho"];
   var WHENS = ["O quanto antes","Neste mês","Sem pressa"];
 
@@ -686,30 +857,49 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   }
 
   /* ---------- exemplos que trocam ao rolar ---------- */
+  var SV = function(d){ return '<svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><path d="' + d + '"/></svg>'; };
+  var DRESS = SV("M38 6h8c1 5 7 5 8 0h8l4 30 22 58H12l22-58z"), BLOUSE = SV("M30 12l14-4c3 5 9 5 12 0l14 4 18 16-10 12-8-6v54H30V34l-8 6-10-12z"),
+      BAG = SV("M22 40h56l6 50H16zM36 40c0-24 28-24 28 0h-6c0-16-16-16-16 0z"), PANTS = SV("M28 8h44l6 84H56L50 36 44 92H22z");
+  var KEYS = new Array(37).join("<i></i>") + "<i></i><i></i><i></i><i class=\"sp\"></i><i></i><i></i><i></i>";
   var EXAMPLES = [
-    {name:"Ateliê Aurora", color:"#ff6b9a", title:"Loja de roupas", text:"Vitrine bonita, carrinho e pagamento online. A cliente compra sem precisar te chamar.",
+    {url:"atelieaurora.com.br", cls:"s-moda", color:"#f0b6ab", title:"Loja de roupas", text:"Vitrine bonita, carrinho e pagamento online. A cliente compra sem precisar te chamar.",
      pts:["Produtos com foto, tamanho e preço","Carrinho e pagamento na hora","Aviso de novidades e promoções"],
-     t:{links:["Novidades","Coleção","Contato"], h:"Nova coleção no ar", s:"Compre online e receba em casa.", cta:"Comprar agora", items:[["Vestido Aurora","R$ 129"],["Bolsa Lume","R$ 89"],["Conjunto Sol","R$ 149"]]}},
-    {name:"Barbearia Dom", color:"#ffd23f", title:"Barbearia e salão", text:"O cliente vê os serviços, escolhe o horário e confirma pelo WhatsApp em um toque.",
+     html:'<div class="strip">Frete grátis acima de R$ 199 · Troca fácil em 30 dias</div>' +
+      '<div class="top"><span class="om">☰</span><nav class="hm"><span>Novidades</span><span>Vestidos</span><span>Acessórios</span></nav><span class="lg">Ateliê Aurora</span><span class="hm">Buscar · Sacola (2)</span><span class="om">Sacola (2)</span></div>' +
+      '<div class="hero"><div><small>COLEÇÃO OUTONO</small><h4>Leve, fluida e feita para você</h4><p>Peças em linho e viscose em tons terrosos, do P ao GG.</p><em class="bt">Ver coleção</em></div><div class="pic">' + DRESS + '</div></div>' +
+      '<div class="row"><div class="pc"><i>' + DRESS + '</i><b>Vestido Aurora</b><span>R$ 189,90</span></div><div class="pc"><i>' + BLOUSE + '</i><b>Blusa Brisa</b><span>R$ 99,90</span></div><div class="pc"><i>' + BAG + '</i><b>Bolsa Lume</b><span>R$ 149,90</span></div><div class="pc"><i>' + PANTS + '</i><b>Calça Terra</b><span>R$ 159,90</span></div></div>'},
+    {url:"barbeariadom.com.br", cls:"s-barb", color:"#d8b45a", title:"Barbearia e salão", text:"O cliente vê os serviços, escolhe o horário e confirma pelo WhatsApp em um toque.",
      pts:["Lista de serviços com valores","Botão de agendamento direto","Mapa e horário de funcionamento"],
-     t:{links:["Serviços","Equipe","Agenda"], h:"Agende seu horário", s:"Sem fila e sem ligação.", cta:"Agendar agora", items:[["Corte","R$ 35"],["Barba","R$ 25"],["Combo","R$ 50"]], dark:true}},
-    {name:"Brasa Burger", color:"#ff8a3d", title:"Hamburgueria e delivery", text:"Cardápio digital sempre atualizado. O pedido chega pronto no seu WhatsApp.",
+     html:'<div class="top"><span class="lg">Barbearia Dom</span><nav class="hm"><span>Serviços</span><span>Barbeiros</span><span>Unidade</span></nav><em class="bt">Agendar</em></div>' +
+      '<div class="hero"><div><small>CENTRO · SEG A SÁB</small><h4>Corte na régua, barba no capricho.</h4><p>Escolha o serviço, o barbeiro e o horário em 30 segundos.</p><em class="bt">Agendar horário</em></div>' +
+      '<div class="card"><span class="t">SERVIÇOS</span><div class="pl"><span>Corte clássico</span><i></i><b>R$ 40</b></div><div class="pl"><span>Barba completa</span><i></i><b>R$ 30</b></div><div class="pl"><span>Corte + barba</span><i></i><b>R$ 60</b></div><div class="pl"><span>Sobrancelha</span><i></i><b>R$ 15</b></div></div></div>' +
+      '<div class="slots"><b>Hoje:</b><span>14:00</span><span class="on">15:30</span><span>17:00</span><span>18:30</span></div>'},
+    {url:"brasaburger.com.br", cls:"s-burg", color:"#ffc21a", title:"Hamburgueria e delivery", text:"Cardápio digital sempre atualizado. O pedido chega pronto no seu WhatsApp.",
      pts:["Cardápio com fotos e combos","Pedido montado pelo próprio cliente","Sem taxa de aplicativo de entrega"],
-     t:{links:["Cardápio","Combos","Entrega"], h:"Peça sem sair de casa", s:"Do fogo direto para a sua porta.", cta:"Fazer pedido", items:[["Smash clássico","R$ 24"],["Combo duplo","R$ 39"],["Batata","R$ 15"]]}},
-    {name:"Nexus Games", color:"#4fd8ff", title:"Loja gamer", text:"Visual escuro e forte, com ofertas em destaque e venda fechada na conversa.",
+     html:'<div class="top"><span class="lg">BRASA</span><nav class="hm"><span>Cardápio</span><span>Combos</span><span>Bebidas</span></nav><span class="open">Aberto · 30–40 min</span></div>' +
+      '<div class="hero"><div><h4>O smash que virou vício.</h4><p>Pão na chapa, carne prensada e queijo derretendo. Peça e receba quentinho.</p><em class="bt">Pedir agora</em></div><div class="plate"><i class="bun-t"></i><i class="let"></i><i class="che"></i><i class="pat"></i><i class="bun-b"></i></div></div>' +
+      '<div class="row"><div class="mc"><b>Smash clássico</b><span>Carne, queijo e molho da casa</span><u>R$ 24,00</u><em>+</em></div><div class="mc"><b>Duplo bacon</b><span>Duas carnes e bacon crocante</span><u>R$ 34,00</u><em>+</em></div><div class="mc"><b>Batata rústica</b><span>Com páprica e maionese</span><u>R$ 15,00</u><em>+</em></div></div>' +
+      '<div class="bag om"><span>Ver sacola (2)</span><span>R$ 58,00</span></div>'},
+    {url:"nexusgames.com.br", cls:"s-game", color:"#ff5fe0", title:"Loja gamer", text:"Visual escuro e forte, com ofertas em destaque e venda fechada na conversa.",
      pts:["Pacotes e ofertas em evidência","Identidade visual gamer","Atendimento rápido pelo WhatsApp"],
-     t:{links:["Setups","Ofertas","Suporte"], h:"Monte seu setup", s:"Periféricos e PCs prontos para jogar.", cta:"Ver ofertas", items:[["Teclado mecânico","R$ 199"],["Headset 7.1","R$ 159"],["Mouse RGB","R$ 99"]], dark:true}},
-    {name:"Clínica Vida", color:"#b9ef4f", title:"Clínica e consultório", text:"Passa confiança logo na primeira tela e facilita a marcação de consultas.",
+     html:'<div class="top"><span class="lg">NEXUS<span>GAMES</span></span><nav class="hm"><span>Periféricos</span><span>PCs</span><span>Ofertas</span></nav><span>Carrinho (1)</span></div>' +
+      '<div class="hero"><div><small>// NOVA LINHA RGB</small><h4>Seu setup. Outro nível.</h4><p>Teclados, mouses e headsets com envio rápido e parcelamento.</p><em class="bt">Ver ofertas</em></div><div class="kb">' + KEYS + '</div></div>' +
+      '<div class="row"><div class="gc"><em>-15%</em><b>Teclado mecânico K7</b><span>R$ 259,90</span></div><div class="gc"><em>NOVO</em><b>Headset Pulse 7.1</b><span>R$ 189,90</span></div><div class="gc"><em>-10%</em><b>Mouse Viper RGB</b><span>R$ 119,90</span></div></div>'},
+    {url:"clinicavida.com.br", cls:"s-clin", color:"#35d0c8", title:"Clínica e consultório", text:"Passa confiança logo na primeira tela e facilita a marcação de consultas.",
      pts:["Especialidades e profissionais","Marcação de consulta online","Endereço, convênios e contato"],
-     t:{links:["Especialidades","Equipe","Contato"], h:"Marque sua consulta", s:"Cuidado de verdade, perto de você.", cta:"Agendar consulta", items:[["Consulta","agendar"],["Exames","agendar"],["Retorno","agendar"]]}}
+     html:'<div class="top"><span class="lg">Clínica Vida</span><nav class="hm"><span>Especialidades</span><span>Equipe</span><span>Convênios</span></nav><em class="bt hm">Agendar consulta</em><span class="om">☰</span></div>' +
+      '<div class="hero"><div><small>Atendimento humanizado</small><h4>Cuidar de você começa com um clique.</h4><p>Marque sua consulta online e receba a confirmação no WhatsApp.</p><div class="tr"><span>Convênios</span><span>Resultados online</span><span>Estacionamento</span></div></div>' +
+      '<div class="form"><b>Agende sua consulta</b><div><label>Especialidade</label>Clínica geral</div><div><label>Data e horário</label>Quinta, 09:30</div><em class="bt">Confirmar</em></div></div>' +
+      '<div class="row"><div class="sp">Clínica geral</div><div class="sp">Cardiologia</div><div class="sp">Pediatria</div><div class="sp">Dermatologia</div></div>'}
   ];
   var exNow = -1;
   function showExample(i){
     if(i === exNow) return; exNow = i;
-    var e = EXAMPLES[i], duo = $("duo"), dark = e.t.dark ? " dark" : "";
+    var e = EXAMPLES[i], duo = $("duo");
     duo.style.setProperty("--accent", e.color);
-    duo.innerHTML = '<div class="mock' + dark + '">' + mockInner(e.t, e.name, false) + '</div>' +
-                    '<div class="mock phone' + dark + '">' + mockInner(e.t, e.name, true) + '</div>';
+    duo.innerHTML =
+      '<div class="frame desk"><div class="fbar"><i></i><i></i><i></i><span>' + e.url + '</span></div><div class="screen"><div class="site ' + e.cls + '">' + e.html + '</div></div></div>' +
+      '<div class="frame cel"><div class="screen"><div class="site m ' + e.cls + '">' + e.html + '</div></div></div>';
     if(!reduce){ duo.classList.remove("pop"); void duo.offsetWidth; duo.classList.add("pop"); }
     $("exCount").textContent = "Exemplo " + (i + 1) + " de " + EXAMPLES.length;
     var st = $("exSteps").children, dt = $("exDots").children;
@@ -723,6 +913,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     $("exSteps").appendChild(d);
     $("exDots").appendChild(document.createElement("i"));
   });
+  /* no celular, o visitante alterna entre ver a versão de celular e a de PC */
+  $("viewToggle").addEventListener("click", function(ev){
+    var b = ev.target.closest(".chip"); if(!b) return;
+    $("duo").dataset.view = b.dataset.v;
+    $("viewCel").setAttribute("aria-pressed", String(b.dataset.v === "cel"));
+    $("viewPc").setAttribute("aria-pressed", String(b.dataset.v === "pc"));
+  });
   showExample(0);
   /* o IntersectionObserver avisa qual passo está passando pelo meio da tela */
   if("IntersectionObserver" in window){
@@ -735,7 +932,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
   /* ---------- blocos que aparecem ao rolar ---------- */
   if(!reduce && "IntersectionObserver" in window){
-    var targets = document.querySelectorAll(".sec-head,.cell,.steps li,.proj-list,.stage,.order-form,.phone,details,.contact>*");
+    var targets = document.querySelectorAll(".term,.sec-head,.cell,.steps li,.proj-list,.stage,.order-form,.phone,details,.contact>*");
     var rvObs = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if(!en.isIntersecting) return;
@@ -750,6 +947,58 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     }
     document.documentElement.classList.add("anim");
   }
+
+  /* ---------- rede de partículas no topo (canvas) ---------- */
+  (function(){
+    var cv = $("net"), ctx = cv.getContext && cv.getContext("2d");
+    if(!ctx || reduce) return;
+    var W = 0, H = 0, pts = [], mouse = null, running = false, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function rgb(){ var h = state.color.replace("#",""); return parseInt(h.substr(0,2),16) + "," + parseInt(h.substr(2,2),16) + "," + parseInt(h.substr(4,2),16); }
+    function size(){
+      var r = hero.getBoundingClientRect(); W = r.width; H = r.height;
+      cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      var n = Math.min(70, Math.round(W * H / 17000)); pts = [];
+      for(var i=0;i<n;i++) pts.push({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35});
+    }
+    function frame(){
+      if(!running) return;
+      ctx.clearRect(0,0,W,H); var c = rgb(), i, j, a, b, d;
+      for(i=0;i<pts.length;i++){
+        a = pts[i]; a.x += a.vx; a.y += a.vy;
+        if(a.x < 0 || a.x > W) a.vx *= -1; if(a.y < 0 || a.y > H) a.vy *= -1;
+        ctx.fillStyle = "rgba(" + c + ",.8)"; ctx.beginPath(); ctx.arc(a.x, a.y, 1.6, 0, 6.3); ctx.fill();
+        for(j=i+1;j<pts.length;j++){
+          b = pts[j]; d = Math.hypot(a.x-b.x, a.y-b.y);
+          if(d < 130){ ctx.strokeStyle = "rgba(" + c + "," + (.28 * (1 - d/130)) + ")"; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+        }
+        if(mouse){ d = Math.hypot(a.x-mouse.x, a.y-mouse.y);
+          if(d < 180){ ctx.strokeStyle = "rgba(" + c + "," + (.5 * (1 - d/180)) + ")"; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke(); } }
+      }
+      requestAnimationFrame(frame);
+    }
+    var hero = $("hero");
+    hero.addEventListener("pointermove", function(e){ var r = hero.getBoundingClientRect(); mouse = {x:e.clientX - r.left, y:e.clientY - r.top}; });
+    hero.addEventListener("pointerleave", function(){ mouse = null; });
+    addEventListener("resize", size);
+    size();
+    /* só anima enquanto o topo está na tela, para não gastar bateria */
+    if("IntersectionObserver" in window){
+      new IntersectionObserver(function(en){ var on = en[0].isIntersecting; if(on && !running){ running = true; frame(); } else if(!on){ running = false; } }).observe(hero);
+    } else { running = true; frame(); }
+  })();
+
+  /* ---------- terminal que digita sozinho quando aparece ---------- */
+  (function(){
+    var pre = $("term"); if(reduce || !("IntersectionObserver" in window)) return;
+    var full = pre.textContent, started = false;
+    var ob = new IntersectionObserver(function(en){
+      if(!en[0].isIntersecting || started) return; started = true; ob.disconnect();
+      pre.textContent = ""; var i = 0;
+      (function type(){ i += 1; pre.textContent = full.slice(0, i);
+        if(i < full.length) setTimeout(type, full[i - 1] === "\n" ? 260 : 22); })();
+    }, {threshold:.4});
+    ob.observe(pre);
+  })();
 
   /* ---------- letreiro ---------- */
   var words = ["Loja virtual","Landing page","Site institucional","Catálogo no WhatsApp","CRM sob medida","Automação com IA","Manutenção de sites"];

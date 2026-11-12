@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Grazziano Junior — criação de sites, lojas virtuais e sistemas sob medida. Peça seu orçamento pelo WhatsApp.">
+<title>Grazziano Junior Sites</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: uma vitrine que o visitante opera. O hero é um construtor de site ao vivo;
+   a cor escolhida ali pinta a página inteira. Blocos em grade "bento", tudo leva ao WhatsApp. */
+:root{
+  color-scheme:dark;
+  --bg:#100e1c; --bg2:#17142a; --card:#1d1a33; --line:#2f2b4d;
+  --fg:#f4f1ff; --muted:#a8a3c7;
+  --accent:#ff8a3d; --on-accent:#14101f;
+  --mock-bg:#ffffff; --mock-fg:#17142a; --mock-soft:#f1eff8;
+  --ok:#5fe0a0;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --r:20px;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme:light;
+    --bg:#f5f3fb; --bg2:#ebe8f6; --card:#ffffff; --line:#d9d4ec;
+    --fg:#17142a; --muted:#5c5780; --ok:#17885a;
+  }
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f5f3fb; --bg2:#ebe8f6; --card:#ffffff; --line:#d9d4ec;
+  --fg:#17142a; --muted:#5c5780; --ok:#17885a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.02em}
+h1{font-size:clamp(2.5rem,6.4vw,4.9rem);font-weight:800}
+h2{font-size:clamp(2rem,4.4vw,3.3rem);font-weight:800}
+h3{font-size:1.35rem;font-weight:700;line-height:1.15}
+p{margin:0}
+a{color:inherit}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.hl{background:var(--accent);color:var(--on-accent);padding:0 .18em;border-radius:.16em;box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:background .4s}
+.lead{color:var(--muted);font-size:1.12rem;max-width:34em}
+section{padding-block:clamp(56px,9vw,112px)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* barra de progresso de rolagem */
+#prog{position:fixed;left:0;top:env(safe-area-inset-top,0px);height:3px;width:100%;transform:scaleX(0);transform-origin:left;background:var(--accent);z-index:30;transition:background .4s}
+
+/* topo */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:20px;padding-block:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:1.15rem;text-decoration:none;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent);transition:background .4s,box-shadow .4s}
+.nav nav{display:flex;gap:22px;margin-left:auto}
+.nav nav a{text-decoration:none;color:var(--muted);font-size:.95rem}
+.nav nav a:hover{color:var(--fg)}
+@media (max-width:760px){.nav nav{display:none}.nav .btn{margin-left:auto}}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:0;cursor:pointer;font:600 1rem var(--body);padding:13px 20px;border-radius:999px;text-decoration:none;background:var(--accent);color:var(--on-accent);transition:transform .15s,background .4s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px -10px var(--accent)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+.btn.ghost:hover{border-color:var(--fg);box-shadow:none}
+.btn.sm{padding:9px 15px;font-size:.92rem;white-space:nowrap}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* hero */
+.hero{padding-block:clamp(36px,6vw,72px) clamp(48px,7vw,88px);position:relative}
+.glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(520px circle at var(--mx,70%) var(--my,30%),color-mix(in srgb,var(--accent) 20%,transparent),transparent 70%);transition:background .4s}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(28px,4vw,56px);align-items:center}
+@media (max-width:940px){.hero-grid{grid-template-columns:minmax(0,1fr)}}
+.hero-copy{display:flex;flex-direction:column;gap:22px;min-width:0}
+.rot{display:inline-block;transition:opacity .28s,transform .28s}
+.rot.out{opacity:0;transform:translateY(.25em)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.ticks{display:flex;flex-wrap:wrap;gap:8px 18px;list-style:none;padding:0;margin:0;color:var(--muted);font-size:.95rem}
+.ticks li::before{content:"✓";color:var(--ok);font-weight:700;margin-right:7px}
+
+/* construtor */
+.builder{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:18px;display:flex;flex-direction:column;gap:16px;min-width:0;box-shadow:0 40px 80px -50px color-mix(in srgb,var(--accent) 70%,transparent);transition:box-shadow .4s}
+.builder-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.builder-head strong{font-family:var(--display);font-size:1.2rem}
+.controls{display:grid;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field>span{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+input[type=text]{font:500 1rem var(--body);color:var(--fg);background:var(--bg2);border:1.5px solid var(--line);border-radius:12px;padding:11px 14px;width:100%}
+input[type=text]:focus{outline:none;border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 .92rem var(--body);cursor:pointer;color:var(--fg);background:var(--bg2);border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;transition:background .2s,border-color .2s,color .2s}
+.chip:hover{border-color:var(--fg)}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.sw{width:34px;height:34px;border-radius:50%;border:3px solid var(--card);outline:2px solid var(--line);cursor:pointer;padding:0;transition:transform .15s}
+.sw:hover{transform:scale(1.12)}
+.sw[aria-pressed=true]{outline-color:var(--fg)}
+
+.mock{background:var(--mock-bg);color:var(--mock-fg);border-radius:14px;overflow:hidden;border:1px solid var(--line);font-size:13px;line-height:1.3;--m-soft:var(--mock-soft)}
+.mock.dark{background:#12121c;color:#f2f2f8;--m-soft:#1f1f30}
+.mock-bar{display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--m-soft)}
+.mock-bar i{width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.25}
+.mock-url{margin-left:8px;flex:1;min-width:0;font-family:var(--mono);font-size:11px;opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mock-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px}
+.mock-logo{font-family:var(--display);font-weight:800;font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mock-links{display:flex;gap:12px;opacity:.6;font-size:11px;flex:none}
+.mock-hero{margin:0 12px;padding:18px 16px;border-radius:12px;background:linear-gradient(120deg,var(--accent),color-mix(in srgb,var(--accent) 45%,#fff));color:#14101f;display:flex;flex-direction:column;gap:8px;align-items:flex-start;transition:background .4s}
+.mock-hero b{font-family:var(--display);font-size:20px;line-height:1.05}
+.mock-hero span{font-size:12px;opacity:.8}
+.mock-hero em{font-style:normal;font-weight:600;font-size:11px;background:#14101f;color:#fff;border-radius:999px;padding:6px 12px}
+.mock-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px}
+.mock-item{background:var(--m-soft);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.mock-item u{display:block;height:44px;border-radius:7px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 70%,#fff),var(--accent));opacity:.9;transition:background .4s}
+.mock-item:nth-child(2) u{background:linear-gradient(200deg,color-mix(in srgb,var(--accent) 35%,#888),var(--accent))}
+.mock-item:nth-child(3) u{background:radial-gradient(circle at 30% 30%,#fff,var(--accent) 70%)}
+.mock-item b{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mock-item small{font-size:10px;opacity:.6}
+.pop{animation:pop .35s ease}
+@keyframes pop{from{transform:scale(.985);opacity:.6}to{transform:none;opacity:1}}
+.note{font-size:.8rem;color:var(--muted)}
+
+/* letreiro */
+.marquee{border-block:1px solid var(--line);overflow:hidden;background:var(--bg2)}
+.marquee div{display:flex;gap:44px;width:max-content;padding-block:16px;animation:slide 32s linear infinite;font-family:var(--display);font-weight:700;font-size:1.25rem;white-space:nowrap}
+.marquee span::after{content:"✦";margin-left:44px;color:var(--accent);transition:color .4s}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* projetos */
+.sec-head{display:flex;flex-direction:column;gap:14px;margin-bottom:36px}
+.proj{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.3fr);gap:24px;align-items:start}
+@media (max-width:900px){.proj{grid-template-columns:minmax(0,1fr)}}
+.proj-list{display:flex;flex-direction:column;gap:10px}
+.proj-tab{text-align:left;cursor:pointer;color:var(--fg);background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:16px 18px;display:flex;flex-direction:column;gap:4px;font-family:var(--body);transition:border-color .2s,transform .2s}
+.proj-tab:hover{transform:translateX(4px)}
+.proj-tab[aria-selected=true]{border-color:var(--accent)}
+.proj-tab b{font-family:var(--display);font-size:1.25rem}
+.proj-tab small{color:var(--muted);font-size:.9rem}
+@media (max-width:900px){.proj-list{flex-direction:row;overflow-x:auto;padding-bottom:6px}.proj-tab{flex:none;min-width:200px}.proj-tab:hover{transform:none}}
+.stage{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:18px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.tiltbox{perspective:1100px}
+.shot{border-radius:14px;overflow:hidden;border:1px solid var(--line);aspect-ratio:16/10;max-width:100%;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .15s ease-out;position:relative;font-size:13px;line-height:1.3}
+.stage-info{display:flex;flex-direction:column;gap:12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted)}
+.stage-info p{color:var(--muted)}
+.stage-info ul{margin:0;padding-left:1.1em;color:var(--muted);display:grid;gap:4px}
+
+/* prévias dos projetos (desenhos ilustrativos, cores próprias de cada marca) */
+.pv{position:absolute;inset:0;display:flex;flex-direction:column}
+.pv-pantoja{background:#fbf3f1;color:#3c1f29;padding:5% 6%;gap:5%}
+.pv-pantoja .t{display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.pv-pantoja .t b{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:20px;font-weight:400}
+.pv-pantoja .h{flex:1;display:grid;grid-template-columns:1.1fr 1fr;gap:5%;min-height:0}
+.pv-pantoja .h>div:first-child{display:flex;flex-direction:column;justify-content:center;gap:8px;font-family:Georgia,serif;font-size:clamp(15px,2.6vw,26px);line-height:1.05}
+.pv-pantoja .h em{font:600 10px var(--body);font-style:normal;background:#3c1f29;color:#fbf3f1;border-radius:999px;padding:6px 12px;align-self:flex-start}
+.pv-pantoja .g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pv-pantoja .g i{border-radius:10px;background:linear-gradient(160deg,#e9b9c0,#c9788a)}
+.pv-pantoja .g i:nth-child(2){background:linear-gradient(200deg,#f3d9d2,#d9a09a)}
+.pv-pantoja .g i:nth-child(3){background:linear-gradient(140deg,#5a2b3a,#a8566b)}
+.pv-pantoja .g i:nth-child(4){background:linear-gradient(20deg,#efc9bf,#f7e6e0)}
+.pv-steam{background:#0b0d17;color:#eef1ff;padding:5% 6%;gap:4%;background-image:radial-gradient(circle at 85% 10%,#3d2bff55,transparent 45%),radial-gradient(circle at 10% 90%,#00e0ff33,transparent 40%)}
+.pv-steam .t{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:.1em}
+.pv-steam .t b{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.02em}
+.pv-steam .s{font-family:var(--display);font-weight:800;font-size:clamp(18px,3.4vw,34px);line-height:1;text-transform:uppercase}
+.pv-steam .s span{color:#00e0ff}
+.pv-steam .p{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0}
+.pv-steam .p div{border:1px solid #ffffff2b;border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;background:#ffffff0d}
+.pv-steam .p div:last-child{border-color:#00e0ff;background:#00e0ff14}
+.pv-steam .p b{font-family:var(--display);font-size:15px}
+.pv-steam .p em{font:600 10px var(--body);font-style:normal;background:#00e0ff;color:#0b0d17;border-radius:999px;padding:5px 10px;align-self:flex-start}
+.pv-crm{background:#f3f5fa;color:#1b2233;padding:4% 5%;gap:4%}
+.pv-crm .t{display:flex;justify-content:space-between;align-items:center;font-size:11px}
+.pv-crm .t b{font-family:var(--display);font-size:16px}
+.pv-crm .k{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;min-height:0}
+.pv-crm .k>div{background:#e6e9f2;border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.pv-crm .k small{font:600 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.6}
+.pv-crm .k i{display:block;background:#fff;border-radius:7px;height:22%;min-height:18px;border-left:4px solid #6d5efc}
+.pv-crm .k>div:nth-child(2) i{border-color:#f4a83a}
+.pv-crm .k>div:nth-child(3) i{border-color:#2bb673}
+.pv-deff{background:#070713;color:#dfe4ff;align-items:center;justify-content:center;gap:5%;background-image:radial-gradient(circle at 50% 45%,#6a3dff44,transparent 55%)}
+.pv-deff .ring{width:34%;aspect-ratio:1;border-radius:50%;border:2px solid #4d7dff;box-shadow:0 0 0 8px #4d7dff22,0 0 40px #8f4dff88,inset 0 0 30px #ff3d6e55;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:clamp(14px,2.4vw,22px);letter-spacing:.12em;animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 14px #4d7dff11,0 0 60px #8f4dffaa,inset 0 0 30px #ff3d6e77}}
+.pv-deff .wave{display:flex;gap:4px;align-items:center;height:12%}
+.pv-deff .wave i{width:4px;border-radius:2px;background:linear-gradient(#4d7dff,#ff3d6e);height:30%;animation:wv 1s ease-in-out infinite}
+.pv-deff .wave i:nth-child(2n){animation-delay:.15s;height:70%}
+.pv-deff .wave i:nth-child(3n){animation-delay:.3s;height:100%}
+@keyframes wv{50%{transform:scaleY(.35)}}
+.pv-deff small{font-family:var(--mono);font-size:10px;letter-spacing:.14em;opacity:.7}
+
+/* exemplos que trocam conforme a rolagem */
+.ex{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(24px,4vw,56px);align-items:start}
+.ex-steps{display:flex;flex-direction:column;min-width:0}
+.ex-step{min-height:72vh;display:flex;flex-direction:column;justify-content:center;gap:12px;opacity:.3;transition:opacity .35s}
+.ex-step.on{opacity:1}
+.ex-step p{color:var(--muted)}
+.ex-step ul{margin:0;padding-left:1.1em;color:var(--muted);display:grid;gap:4px}
+.ex-stage{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.ex-meta{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ex-dots{display:flex;gap:6px}
+.ex-dots i{width:22px;height:5px;border-radius:3px;background:var(--line);transition:background .3s,width .3s}
+.ex-dots i.on{background:var(--accent);width:38px}
+.duo{position:relative;padding:0 7% 36px 0}
+.duo .mock{box-shadow:0 30px 60px -35px var(--accent)}
+.duo .mock.phone{position:absolute;right:0;bottom:0;width:clamp(118px,32%,190px);border-radius:22px;border:5px solid var(--fg);box-shadow:0 24px 40px -18px var(--fg)}
+.mock.phone .mock-nav{padding:10px}
+.mock.phone .mock-hero{margin:0 8px;padding:12px 10px;gap:6px}
+.mock.phone .mock-hero b{font-size:14px}
+.mock.phone .mock-hero span{font-size:10px}
+.mock.phone .mock-hero em{font-size:9px;padding:5px 9px}
+.mock.phone .mock-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:8px}
+.mock.phone .mock-item u{height:30px}
+@media (max-width:900px){
+  .ex{grid-template-columns:minmax(0,1fr)}
+  .ex-stage{order:-1;top:calc(env(safe-area-inset-top,0px) + 58px);z-index:5;background:var(--bg);padding-block:12px;box-shadow:0 14px 14px -14px var(--bg)}
+  .ex-step{min-height:58vh;justify-content:flex-start;padding-top:28px}
+  .ex-stage .note{display:none}
+  .duo{padding:0 9% 26px 0}
+  .duo .mock.phone{width:190px;transform:scale(.62);transform-origin:bottom right}
+}
+@media (max-width:480px){.wa-long{display:none}}
+
+/* aparecer ao rolar: só liga quando o JavaScript confirma que consegue revelar */
+.anim .rv{opacity:0;transform:translateY(34px) scale(.98);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.anim .rv.in{opacity:1;transform:none}
+
+/* serviços: bento */
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.cell{grid-column:span 2;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0;transition:transform .2s,border-color .2s}
+.cell:hover{transform:translateY(-4px);border-color:var(--accent)}
+.cell.w3{grid-column:span 3}
+.cell.big{background:var(--accent);color:var(--on-accent);border-color:transparent;transition:background .4s,transform .2s}
+.cell p{color:var(--muted);font-size:.98rem}
+.cell.big p{color:inherit;opacity:.85}
+.cell .eyebrow{color:inherit;opacity:.7}
+@media (max-width:860px){.cell,.cell.w3{grid-column:span 3}}
+@media (max-width:560px){.cell,.cell.w3{grid-column:span 6}}
+
+/* processo */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;border-top:2px solid var(--line);padding-top:18px;display:flex;flex-direction:column;gap:8px}
+.steps li::before{content:"0" counter(s);font-family:var(--mono);font-size:.85rem;color:var(--muted)}
+.steps p{color:var(--muted);font-size:.98rem}
+@media (max-width:860px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.steps{grid-template-columns:minmax(0,1fr)}}
+
+/* pedido */
+.band{background:var(--bg2);border-block:1px solid var(--line)}
+.order{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:28px;align-items:start}
+@media (max-width:900px){.order{grid-template-columns:minmax(0,1fr)}}
+.order-form{display:flex;flex-direction:column;gap:22px;min-width:0}
+.phone{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.bubble{background:color-mix(in srgb,var(--ok) 18%,var(--card));border:1px solid color-mix(in srgb,var(--ok) 40%,var(--line));border-radius:16px 16px 4px 16px;padding:14px 16px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.98rem;min-height:9em}
+.phone .cta-row .btn{flex:1 1 180px}
+
+/* dúvidas */
+.faq{display:grid;gap:10px;max-width:780px}
+details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0 20px}
+summary{cursor:pointer;font-weight:600;padding:18px 0;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);font-size:1.2rem;transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--muted);padding-bottom:18px;max-width:62ch}
+
+/* contato */
+.contact{text-align:left;display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.num{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,8vw,5.4rem);letter-spacing:-.03em;line-height:1;user-select:all;-webkit-user-select:all}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:.9rem;padding-block:22px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* botão flutuante */
+.fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:25;width:58px;height:58px;border-radius:50%;padding:0;box-shadow:0 12px 30px -8px var(--accent)}
+.fab svg{width:26px;height:26px}
+.fab::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--accent);animation:ring 2.2s ease-out infinite}
+@keyframes ring{to{transform:scale(1.7);opacity:0}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body style="margin:0">
+<div id="prog"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#topo"><span class="dot"></span>Grazziano Junior</a>
+    <nav aria-label="Seções">
+      <a href="#exemplos">Exemplos</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#pedido">Orçamento</a>
+    </nav>
+    <a class="btn sm js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener"><span class="wa-long">Chamar no&nbsp;</span>WhatsApp</a>
+  </div>
+</header>
+
+<main id="topo">
+  <div class="hero" id="hero">
+    <div class="glow"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Criação de sites e lojas virtuais</span>
+        <h1>Eu crio <span class="hl"><span class="rot" id="rot">lojas virtuais</span></span> que transformam visita em venda.</h1>
+        <p class="lead">Seu negócio aberto 24 horas, bonito no celular e com o cliente a um toque do seu WhatsApp. Teste ao lado: monte a cara do seu site em 10 segundos.</p>
+        <div class="cta-row">
+          <a class="btn js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            Pedir orçamento grátis
+          </a>
+          <a class="btn ghost" href="#projetos">Ver projetos</a>
+        </div>
+        <ul class="ticks">
+          <li>Feito para celular</li>
+          <li>Botão direto para o WhatsApp</li>
+          <li>Você acompanha cada etapa</li>
+        </ul>
+      </div>
+
+      <div class="builder" aria-label="Construtor de site ao vivo">
+        <div class="builder-head">
+          <strong>Monte a cara do seu site</strong>
+          <span class="eyebrow">ao vivo</span>
+        </div>
+        <div class="controls">
+          <label class="field" for="bizName"><span>Nome do seu negócio</span>
+            <input type="text" id="bizName" maxlength="28" placeholder="Ex.: Ateliê da Ana" autocomplete="off">
+          </label>
+          <div class="field"><span>Tipo de site</span>
+            <div class="chips" id="typeChips">
+              <button class="chip" type="button" data-type="loja" aria-pressed="true">Loja virtual</button>
+              <button class="chip" type="button" data-type="gamer" aria-pressed="false">Loja gamer</button>
+              <button class="chip" type="button" data-type="servico" aria-pressed="false">Serviços</button>
+              <button class="chip" type="button" data-type="comida" aria-pressed="false">Restaurante</button>
+            </div>
+          </div>
+          <div class="field"><span>Cor da marca (pinta a página toda)</span>
+            <div class="swatches" id="swatches"></div>
+          </div>
+        </div>
+        <div class="mock" id="mock"></div>
+        <a class="btn js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener">Quero um site assim</a>
+        <span class="note">A prévia é um exemplo ilustrativo. O site real é desenhado sob medida para a sua marca.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div id="mq"></div></div>
+
+  <section id="exemplos">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Exemplos</span>
+        <h2>Vá rolando e veja o site <span class="hl">mudar de cara</span></h2>
+        <p class="lead">Cada negócio pede um site diferente. Todos funcionam no computador e no celular ao mesmo tempo.</p>
+      </div>
+      <div class="ex">
+        <div class="ex-steps" id="exSteps"></div>
+        <div class="ex-stage">
+          <div class="ex-meta"><span class="eyebrow" id="exCount">Exemplo 1 de 5</span><div class="ex-dots" id="exDots"></div></div>
+          <div class="duo" id="duo"></div>
+          <span class="note">Marcas e produtos fictícios, só para demonstração.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Projetos</span>
+        <h2>O que eu já <span class="hl">construí</span></h2>
+        <p class="lead">Toque em um projeto para ver a prévia. Passe o mouse sobre a tela para ela se mexer.</p>
+      </div>
+      <div class="proj">
+        <div class="proj-list" role="tablist" aria-label="Projetos" id="projTabs"></div>
+        <div class="stage" role="tabpanel" id="stage">
+          <div class="tiltbox"><div class="shot" id="shot"></div></div>
+          <div class="stage-info" id="stageInfo"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Serviços</span>
+        <h2>Tudo que seu negócio precisa para <span class="hl">vender online</span></h2>
+      </div>
+      <div class="bento">
+        <div class="cell w3 big">
+          <span class="eyebrow">O mais pedido</span>
+          <h3>Loja virtual completa</h3>
+          <p>Vitrine de produtos, carrinho, formas de pagamento e frete. Monto em plataforma pronta, como a Nuvemshop, ou com código próprio, conforme o que fizer mais sentido para você.</p>
+        </div>
+        <div class="cell w3">
+          <h3>Landing page que converte</h3>
+          <p>Uma página única, direta, feita para um objetivo: o visitante clicar e falar com você. Ideal para lançamentos, serviços e anúncios.</p>
+        </div>
+        <div class="cell">
+          <h3>Site institucional</h3>
+          <p>Quem é sua empresa, o que oferece e como contratar. Sua marca com cara profissional no Google.</p>
+        </div>
+        <div class="cell">
+          <h3>Vendas pelo WhatsApp</h3>
+          <p>Catálogo e botões que já abrem a conversa com o pedido escrito. Menos digitação, mais fechamento.</p>
+        </div>
+        <div class="cell">
+          <h3>CRM e sistemas sob medida</h3>
+          <p>Painel para organizar leads e clientes, do primeiro contato até a venda.</p>
+        </div>
+        <div class="cell w3">
+          <h3>Automação com inteligência artificial</h3>
+          <p>Assistentes e rotinas que usam IA para ganhar tempo no atendimento e nas tarefas repetitivas.</p>
+        </div>
+        <div class="cell w3">
+          <h3>Ajustes e manutenção</h3>
+          <p>Já tem um site? Eu atualizo o visual, corrijo erros e deixo tudo funcionando bem no celular.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="processo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Da conversa ao site <span class="hl">no ar</span></h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Conversa</h3><p>Você me conta sobre o negócio pelo WhatsApp e eu entendo o que o site precisa fazer.</p></li>
+        <li><h3>Proposta</h3><p>Envio o que será feito, o prazo e o valor. Sem letras miúdas.</p></li>
+        <li><h3>Construção</h3><p>Monto o site e mando prévias para você aprovar e pedir ajustes.</p></li>
+        <li><h3>Publicação</h3><p>Site no ar, testado no celular, e eu te mostro como usar.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="pedido" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Orçamento</span>
+        <h2>Monte seu pedido em <span class="hl">3 toques</span></h2>
+        <p class="lead">Marque o que você precisa. A mensagem fica pronta e você só envia.</p>
+      </div>
+      <div class="order">
+        <div class="order-form">
+          <div class="field"><span>O que você precisa?</span>
+            <div class="chips" id="needChips"></div>
+          </div>
+          <div class="field"><span>Para quando?</span>
+            <div class="chips" id="whenChips"></div>
+          </div>
+          <label class="field" for="bizName2"><span>Nome do seu negócio</span>
+            <input type="text" id="bizName2" maxlength="28" placeholder="Ex.: Ateliê da Ana" autocomplete="off">
+          </label>
+        </div>
+        <div class="phone">
+          <span class="eyebrow">Sua mensagem</span>
+          <div class="bubble" id="bubble"></div>
+          <div class="cta-row">
+            <a class="btn js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener">Enviar no WhatsApp</a>
+            <button class="btn ghost" type="button" id="copyMsg">Copiar mensagem</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Dúvidas</span>
+        <h2>Perguntas comuns</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Quanto custa um site?</summary><p>Depende do tipo e do tamanho do projeto. Uma landing page é diferente de uma loja completa. O orçamento é grátis: me chame no WhatsApp e eu passo o valor certinho para o seu caso.</p></details>
+        <details><summary>Em quanto tempo fica pronto?</summary><p>O prazo vai combinado na proposta, antes de começar. Projetos menores saem mais rápido; lojas com muitos produtos levam mais tempo.</p></details>
+        <details><summary>Vou conseguir mexer no site sozinho?</summary><p>Sim. Na entrega eu mostro como trocar produtos, textos e fotos. Se preferir, também faço a manutenção para você.</p></details>
+        <details><summary>Não tenho logo nem fotos. Dá para fazer?</summary><p>Dá. A gente começa com o que você tem e eu indico o que vale providenciar para o site ficar profissional.</p></details>
+        <details><summary>Preciso entender de tecnologia?</summary><p>Não. Você cuida do seu negócio e eu cuido da parte técnica, explicando tudo em português claro.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="band">
+    <div class="wrap contact">
+      <span class="eyebrow">Contato</span>
+      <h2>Vamos colocar seu negócio <span class="hl">no ar</span>?</h2>
+      <div class="num" id="num">(95) 98439-1599</div>
+      <div class="cta-row">
+        <a class="btn js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        <button class="btn ghost" type="button" id="copyNum">Copiar número</button>
+      </div>
+      <p class="note">Grazziano Junior · Criação de sites, lojas virtuais e sistemas</p>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Grazziano Junior</span><span>Feito com código e café</span></div></footer>
+
+<a class="btn fab js-wa" href="https://wa.me/5595984391599" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20l1.2-5.1A8.5 8.5 0 1 1 21 11.5z"/></svg>
+</a>
+
+<script>
+(function(){
+  var WA = "https://wa.me/5595984391599";
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function(id){ return document.getElementById(id); };
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  /* ---------- estado: tudo que o visitante escolhe fica aqui ---------- */
+  var state = { name:"", type:"loja", color:"#ff8a3d", needs:{}, when:"" };
+
+  var TYPES = {
+    loja:   {label:"Loja virtual", fallback:"Sua Loja", links:["Novidades","Coleção","Contato"], h:"Nova coleção no ar", s:"Compre online e receba em casa.", cta:"Comprar agora", items:[["Vestido Aurora","exemplo"],["Bolsa Lume","exemplo"],["Conjunto Sol","exemplo"]]},
+    gamer:  {label:"Loja gamer", fallback:"Sua Loja Gamer", links:["Setups","Ofertas","Suporte"], h:"Monte seu setup", s:"Periféricos e PCs prontos para jogar.", cta:"Ver ofertas", items:[["Teclado mecânico","exemplo"],["Headset 7.1","exemplo"],["Mouse RGB","exemplo"]], dark:true},
+    servico:{label:"Site de serviços", fallback:"Seu Negócio", links:["Serviços","Sobre","Agenda"], h:"Agende seu horário", s:"Atendimento rápido, sem fila e sem ligação.", cta:"Agendar pelo WhatsApp", items:[["Avaliação","exemplo"],["Atendimento","exemplo"],["Pacote mensal","exemplo"]]},
+    comida: {label:"Site de restaurante", fallback:"Seu Restaurante", links:["Cardápio","Combos","Entrega"], h:"Peça sem sair de casa", s:"Cardápio completo e pedido em um toque.", cta:"Fazer pedido", items:[["Prato do dia","exemplo"],["Combo família","exemplo"],["Sobremesa","exemplo"]]}
+  };
+  var COLORS = ["#ff8a3d","#ff6b9a","#b9ef4f","#4fd8ff","#b49bff","#ffd23f"];
+  var NEEDS = ["Loja virtual","Landing page","Site institucional","Botão de WhatsApp","Catálogo de produtos","CRM / painel de clientes","Ajustes em site que já tenho"];
+  var WHENS = ["O quanto antes","Neste mês","Sem pressa"];
+
+  /* ---------- prévia do site no construtor ---------- */
+  function slug(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"") || "seunegocio"; }
+  function mockInner(t, name, phone){
+    var items = phone ? t.items.slice(0, 2) : t.items;
+    return (phone ? '' : '<div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">www.' + esc(slug(name)) + '.com.br</span></div>') +
+      '<div class="mock-nav"><span class="mock-logo">' + esc(name) + '</span>' + (phone ? '' : '<span class="mock-links">' + t.links.map(function(l){return "<span>"+l+"</span>";}).join("") + '</span>') + '</div>' +
+      '<div class="mock-hero"><b>' + t.h + '</b><span>' + t.s + '</span><em>' + t.cta + '</em></div>' +
+      '<div class="mock-grid">' + items.map(function(i){return '<div class="mock-item"><u></u><b>'+i[0]+'</b><small>'+i[1]+'</small></div>';}).join("") + '</div>';
+  }
+  function renderMock(){
+    var t = TYPES[state.type], name = state.name.trim() || t.fallback, m = $("mock");
+    m.className = "mock" + (t.dark ? " dark" : "");
+    m.innerHTML = mockInner(t, name, false);
+    if(!reduce){ m.classList.remove("pop"); void m.offsetWidth; m.classList.add("pop"); }
+  }
+
+  /* ---------- mensagem pronta para o WhatsApp ---------- */
+  function buildMsg(){
+    var lines = ["Olá, Grazziano! Vi seu site e quero um orçamento."];
+    var name = state.name.trim();
+    if(name) lines.push("• Negócio: " + name);
+    lines.push("• Tipo de site: " + TYPES[state.type].label);
+    var needs = NEEDS.filter(function(n){ return state.needs[n]; });
+    if(needs.length) lines.push("• Preciso de: " + needs.join(", "));
+    if(state.when) lines.push("• Prazo: " + state.when);
+    return lines.join("\n");
+  }
+  function sync(){
+    var msg = buildMsg();
+    $("bubble").textContent = msg;
+    var href = WA + "?text=" + encodeURIComponent(msg);
+    var links = document.querySelectorAll(".js-wa");
+    for(var i=0;i<links.length;i++) links[i].href = href;
+  }
+
+  /* ---------- controles ---------- */
+  function setColor(c){
+    state.color = c;
+    document.documentElement.style.setProperty("--accent", c);
+    var b = $("swatches").children;
+    for(var i=0;i<b.length;i++) b[i].setAttribute("aria-pressed", String(b[i].dataset.c === c));
+  }
+  COLORS.forEach(function(c, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "sw"; b.id = "sw" + i; b.dataset.c = c; b.style.background = c;
+    b.setAttribute("aria-label", "Cor " + (i+1)); b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", function(){ setColor(c); });
+    $("swatches").appendChild(b);
+  });
+
+  $("typeChips").addEventListener("click", function(e){
+    var b = e.target.closest(".chip"); if(!b) return;
+    state.type = b.dataset.type;
+    var all = this.children;
+    for(var i=0;i<all.length;i++) all[i].setAttribute("aria-pressed", String(all[i] === b));
+    renderMock(); sync();
+  });
+
+  function onName(e){
+    state.name = e.target.value;
+    if(e.target.id === "bizName") $("bizName2").value = state.name; else $("bizName").value = state.name;
+    renderMock(); sync();
+  }
+  $("bizName").addEventListener("input", onName);
+  $("bizName2").addEventListener("input", onName);
+
+  NEEDS.forEach(function(n, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.id = "need" + i; b.textContent = n; b.setAttribute("aria-pressed","false");
+    b.addEventListener("click", function(){
+      state.needs[n] = !state.needs[n];
+      b.setAttribute("aria-pressed", String(!!state.needs[n])); sync();
+    });
+    $("needChips").appendChild(b);
+  });
+  WHENS.forEach(function(w, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.id = "when" + i; b.textContent = w; b.setAttribute("aria-pressed","false");
+    b.addEventListener("click", function(){
+      state.when = state.when === w ? "" : w;
+      var all = $("whenChips").children;
+      for(var k=0;k<all.length;k++) all[k].setAttribute("aria-pressed", String(all[k].textContent === state.when));
+      sync();
+    });
+    $("whenChips").appendChild(b);
+  });
+
+  /* ---------- copiar (com plano B se o navegador recusar) ---------- */
+  function copy(text, btn, sourceEl){
+    var old = btn.textContent;
+    function done(ok){ btn.textContent = ok ? "Copiado!" : "Selecione e copie"; setTimeout(function(){ btn.textContent = old; }, 1800); }
+    function fallback(){
+      try{ var r = document.createRange(); r.selectNodeContents(sourceEl); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }catch(e){}
+      done(false);
+    }
+    try{ navigator.clipboard.writeText(text).then(function(){ done(true); }, fallback); }catch(e){ fallback(); }
+  }
+  $("copyMsg").addEventListener("click", function(){ copy(buildMsg(), this, $("bubble")); });
+  $("copyNum").addEventListener("click", function(){ copy("+55 95 98439-1599", this, $("num")); });
+
+  /* ---------- projetos ---------- */
+  var PROJECTS = [
+    {id:"pantoja", name:"Pantoja Intimeé", kind:"Loja virtual de moda íntima",
+     tags:["E-commerce","Nuvemshop","Versão em código próprio"],
+     desc:"Loja online com vitrine elegante, pensada para a dona cadastrar produtos, descrições e fotos sozinha.",
+     pts:["Estrutura completa de loja: vitrine, produto, carrinho","Visual delicado, alinhado à marca","Versão codificada do zero publicada no GitHub"],
+     html:'<div class="pv pv-pantoja"><div class="t"><b>Pantoja Intimeé</b><span>Coleção · Novidades · Contato</span></div><div class="h"><div>Delicadeza em cada detalhe<em>Ver coleção</em></div><div class="g"><i></i><i></i><i></i><i></i></div></div></div>'},
+    {id:"steam", name:"Steam Brabo", kind:"Loja gamer com venda pelo WhatsApp",
+     tags:["Loja gamer","WhatsApp","Marca própria"],
+     desc:"Site da marca Steam Brabo, “De player pra player”. O cliente escolhe o pacote e fecha direto na conversa.",
+     pts:["Dois pacotes em destaque: Brabo Max e Brabo Insano","Botões que abrem o WhatsApp com o pedido","Identidade visual gamer com a logo da marca"],
+     html:'<div class="pv pv-steam"><div class="t"><b>STEAM BRABO</b><span>PACOTES · CONTATO</span></div><div class="s">De player <span>pra player</span></div><div class="p"><div><b>Brabo Max</b><em>Quero esse</em></div><div><b>Brabo Insano</b><em>Quero esse</em></div></div></div>'},
+    {id:"crm", name:"CRM Steam Brabo", kind:"Sistema de gestão de leads",
+     tags:["Sistema web","Leads","Atendimento"],
+     desc:"Painel próprio da marca para receber e organizar os contatos que chegam pelo WhatsApp.",
+     pts:["Leads centralizados em um só lugar","Acompanhamento de cada contato até a venda","Feito sob medida para a rotina da loja"],
+     html:'<div class="pv pv-crm"><div class="t"><b>CRM · Leads</b><span>Hoje</span></div><div class="k"><div><small>Novos</small><i></i><i></i><i></i></div><div><small>Em conversa</small><i></i><i></i></div><div><small>Fechados</small><i></i></div></div></div>'},
+    {id:"deff", name:"Deff", kind:"Assistente pessoal de voz com IA",
+     tags:["Inteligência artificial","Voz","App de desktop"],
+     desc:"Um assistente no estilo Jarvis: conversa por voz, abre programas e ajuda a programar, com interface futurista.",
+     pts:["Ativação por voz com a palavra “Deff”","Cérebro de IA conectado ao Claude","Interface HUD em azul, vermelho e violeta"],
+     html:'<div class="pv pv-deff"><div class="ring">D.E.F.F</div><div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><small>OUVINDO…</small></div>'}
+  ];
+  function showProject(i){
+    var p = PROJECTS[i], tabs = $("projTabs").children;
+    for(var k=0;k<tabs.length;k++) tabs[k].setAttribute("aria-selected", String(k === i));
+    $("shot").innerHTML = p.html;
+    $("stageInfo").innerHTML =
+      '<span class="eyebrow">' + p.kind + '</span><h3>' + p.name + '</h3>' +
+      '<div class="tags">' + p.tags.map(function(t){return '<span class="tag">'+t+'</span>';}).join("") + '</div>' +
+      '<p>' + p.desc + '</p><ul>' + p.pts.map(function(t){return '<li>'+t+'</li>';}).join("") + '</ul>' +
+      '<span class="note">Prévia ilustrativa do projeto.</span>';
+    if(!reduce){ $("shot").classList.remove("pop"); void $("shot").offsetWidth; $("shot").classList.add("pop"); }
+  }
+  PROJECTS.forEach(function(p, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "proj-tab"; b.id = "tab-" + p.id; b.setAttribute("role","tab");
+    b.innerHTML = "<b>" + p.name + "</b><small>" + p.kind + "</small>";
+    b.addEventListener("click", function(){ showProject(i); });
+    $("projTabs").appendChild(b);
+  });
+
+  /* inclinação 3D da prévia conforme o mouse */
+  var tilt = document.querySelector(".tiltbox"), shot = $("shot");
+  if(!reduce){
+    tilt.addEventListener("pointermove", function(e){
+      var r = tilt.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      shot.style.setProperty("--ry", (x * 10).toFixed(2) + "deg");
+      shot.style.setProperty("--rx", (-y * 8).toFixed(2) + "deg");
+    });
+    tilt.addEventListener("pointerleave", function(){ shot.style.setProperty("--ry","0deg"); shot.style.setProperty("--rx","0deg"); });
+  }
+
+  /* ---------- exemplos que trocam ao rolar ---------- */
+  var EXAMPLES = [
+    {name:"Ateliê Aurora", color:"#ff6b9a", title:"Loja de roupas", text:"Vitrine bonita, carrinho e pagamento online. A cliente compra sem precisar te chamar.",
+     pts:["Produtos com foto, tamanho e preço","Carrinho e pagamento na hora","Aviso de novidades e promoções"],
+     t:{links:["Novidades","Coleção","Contato"], h:"Nova coleção no ar", s:"Compre online e receba em casa.", cta:"Comprar agora", items:[["Vestido Aurora","R$ 129"],["Bolsa Lume","R$ 89"],["Conjunto Sol","R$ 149"]]}},
+    {name:"Barbearia Dom", color:"#ffd23f", title:"Barbearia e salão", text:"O cliente vê os serviços, escolhe o horário e confirma pelo WhatsApp em um toque.",
+     pts:["Lista de serviços com valores","Botão de agendamento direto","Mapa e horário de funcionamento"],
+     t:{links:["Serviços","Equipe","Agenda"], h:"Agende seu horário", s:"Sem fila e sem ligação.", cta:"Agendar agora", items:[["Corte","R$ 35"],["Barba","R$ 25"],["Combo","R$ 50"]], dark:true}},
+    {name:"Brasa Burger", color:"#ff8a3d", title:"Hamburgueria e delivery", text:"Cardápio digital sempre atualizado. O pedido chega pronto no seu WhatsApp.",
+     pts:["Cardápio com fotos e combos","Pedido montado pelo próprio cliente","Sem taxa de aplicativo de entrega"],
+     t:{links:["Cardápio","Combos","Entrega"], h:"Peça sem sair de casa", s:"Do fogo direto para a sua porta.", cta:"Fazer pedido", items:[["Smash clássico","R$ 24"],["Combo duplo","R$ 39"],["Batata","R$ 15"]]}},
+    {name:"Nexus Games", color:"#4fd8ff", title:"Loja gamer", text:"Visual escuro e forte, com ofertas em destaque e venda fechada na conversa.",
+     pts:["Pacotes e ofertas em evidência","Identidade visual gamer","Atendimento rápido pelo WhatsApp"],
+     t:{links:["Setups","Ofertas","Suporte"], h:"Monte seu setup", s:"Periféricos e PCs prontos para jogar.", cta:"Ver ofertas", items:[["Teclado mecânico","R$ 199"],["Headset 7.1","R$ 159"],["Mouse RGB","R$ 99"]], dark:true}},
+    {name:"Clínica Vida", color:"#b9ef4f", title:"Clínica e consultório", text:"Passa confiança logo na primeira tela e facilita a marcação de consultas.",
+     pts:["Especialidades e profissionais","Marcação de consulta online","Endereço, convênios e contato"],
+     t:{links:["Especialidades","Equipe","Contato"], h:"Marque sua consulta", s:"Cuidado de verdade, perto de você.", cta:"Agendar consulta", items:[["Consulta","agendar"],["Exames","agendar"],["Retorno","agendar"]]}}
+  ];
+  var exNow = -1;
+  function showExample(i){
+    if(i === exNow) return; exNow = i;
+    var e = EXAMPLES[i], duo = $("duo"), dark = e.t.dark ? " dark" : "";
+    duo.style.setProperty("--accent", e.color);
+    duo.innerHTML = '<div class="mock' + dark + '">' + mockInner(e.t, e.name, false) + '</div>' +
+                    '<div class="mock phone' + dark + '">' + mockInner(e.t, e.name, true) + '</div>';
+    if(!reduce){ duo.classList.remove("pop"); void duo.offsetWidth; duo.classList.add("pop"); }
+    $("exCount").textContent = "Exemplo " + (i + 1) + " de " + EXAMPLES.length;
+    var st = $("exSteps").children, dt = $("exDots").children;
+    for(var k=0;k<st.length;k++){ st[k].classList.toggle("on", k === i); dt[k].classList.toggle("on", k === i); }
+  }
+  EXAMPLES.forEach(function(e, i){
+    var d = document.createElement("div");
+    d.className = "ex-step"; d.dataset.i = i;
+    d.innerHTML = '<span class="eyebrow">Exemplo ' + (i + 1) + '</span><h3>' + e.title + '</h3><p>' + e.text + '</p><ul>' +
+      e.pts.map(function(p){ return "<li>" + p + "</li>"; }).join("") + '</ul>';
+    $("exSteps").appendChild(d);
+    $("exDots").appendChild(document.createElement("i"));
+  });
+  showExample(0);
+  /* o IntersectionObserver avisa qual passo está passando pelo meio da tela */
+  if("IntersectionObserver" in window){
+    var exObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting) showExample(+en.target.dataset.i); });
+    }, {rootMargin: matchMedia("(max-width:900px)").matches ? "-70% 0px -29% 0px" : "-48% 0px -48% 0px"});
+    var steps = $("exSteps").children;
+    for(var q=0;q<steps.length;q++) exObs.observe(steps[q]);
+  }
+
+  /* ---------- blocos que aparecem ao rolar ---------- */
+  if(!reduce && "IntersectionObserver" in window){
+    var targets = document.querySelectorAll(".sec-head,.cell,.steps li,.proj-list,.stage,.order-form,.phone,details,.contact>*");
+    var rvObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        var el = en.target; rvObs.unobserve(el); el.classList.add("in");
+        setTimeout(function(){ el.classList.remove("rv","in"); el.style.removeProperty("--d"); }, 1200);
+      });
+    }, {threshold:0.05});
+    for(var z=0;z<targets.length;z++){
+      var el = targets[z], sibs = el.parentNode.children, idx = Array.prototype.indexOf.call(sibs, el);
+      el.classList.add("rv"); el.style.setProperty("--d", (idx % 4) * 0.09 + "s");
+      rvObs.observe(el);
+    }
+    document.documentElement.classList.add("anim");
+  }
+
+  /* ---------- letreiro ---------- */
+  var words = ["Loja virtual","Landing page","Site institucional","Catálogo no WhatsApp","CRM sob medida","Automação com IA","Manutenção de sites"];
+  $("mq").innerHTML = words.concat(words).map(function(w){ return "<span>" + w + "</span>"; }).join("");
+
+  /* ---------- palavra que troca no título ---------- */
+  var rot = $("rot"), rw = ["lojas virtuais","landing pages","sites profissionais","sistemas sob medida"], ri = 0;
+  if(!reduce){
+    setInterval(function(){
+      rot.classList.add("out");
+      setTimeout(function(){ ri = (ri + 1) % rw.length; rot.textContent = rw[ri]; rot.classList.remove("out"); }, 280);
+    }, 2600);
+  }
+
+  /* ---------- brilho que segue o mouse + barra de progresso ---------- */
+  var hero = $("hero");
+  hero.addEventListener("pointermove", function(e){
+    var r = hero.getBoundingClientRect();
+    hero.style.setProperty("--mx", (e.clientX - r.left) + "px");
+    hero.style.setProperty("--my", (e.clientY - r.top) + "px");
+  });
+  var prog = $("prog");
+  function onScroll(){
+    var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+    prog.style.transform = "scaleX(" + (max > 0 ? h.scrollTop / max : 0) + ")";
+  }
+  addEventListener("scroll", onScroll, {passive:true});
+
+  /* ---------- início ---------- */
+  setColor(state.color); renderMock(); showProject(0); sync(); onScroll();
+})();
+</script>
+</body>
+</html>
